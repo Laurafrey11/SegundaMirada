@@ -1,16 +1,10 @@
-import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { Moon, Sun, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { useState } from 'react';
 
 export function SettingsToggle() {
-    const { theme, setTheme } = useTheme();
     const { i18n } = useTranslation();
     const [showLangs, setShowLangs] = useState(false);
-
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
-    };
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
@@ -47,19 +41,6 @@ export function SettingsToggle() {
                     <Globe className="w-5 h-5" />
                 </button>
             </div>
-
-            {/* Theme Toggle */}
-            <button
-                onClick={toggleTheme}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-lg border border-slate-200 dark:border-slate-700 hover:scale-105 transition-transform"
-                aria-label="Toggle theme"
-            >
-                {theme === 'light' ? (
-                    <Moon className="w-5 h-5" />
-                ) : (
-                    <Sun className="w-5 h-5" />
-                )}
-            </button>
         </div>
     );
 }
