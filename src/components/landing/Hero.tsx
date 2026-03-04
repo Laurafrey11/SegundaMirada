@@ -13,11 +13,11 @@ export function Hero({ onStartAdmission }: HeroProps) {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden bg-background pt-24 pb-32 transition-colors duration-300">
+    <section className="relative overflow-hidden bg-black pt-24 pb-32 transition-colors duration-300">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/hospital/1920/1080?blur=4')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-background mix-blend-multiply" />
+        <div className="absolute inset-0 bg-black mix-blend-multiply" />
       </div>
 
       <Vortex
@@ -34,17 +34,17 @@ export function Hero({ onStartAdmission }: HeroProps) {
           transition={{ duration: 0.6 }}
           className="flex items-center gap-2 mb-8 mt-12"
         >
-          <div className="bg-primary/10 p-2 rounded-full">
+          <div className="bg-primary/20 p-2 rounded-full">
             <ShieldCheck className="w-8 h-8 text-primary" />
           </div>
-          <span className="text-2xl font-semibold tracking-tight text-foreground">Segunda Mirada</span>
+          <span className="text-2xl font-semibold tracking-tight text-white">Segunda Mirada</span>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-bold tracking-tight mb-6 max-w-4xl text-foreground"
+          className="text-5xl md:text-7xl font-bold tracking-tight mb-6 max-w-4xl text-white"
         >
           {t('landing.title', 'Claridad y confianza antes de entrar al quirófano.')}
         </motion.h1>
@@ -53,7 +53,7 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl font-light"
+          className="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl font-light"
         >
           {t('landing.subtitle', 'Segunda opinión médica premium por cirujanos especialistas en miembro superior y mano. Evita cirugías innecesarias con un diagnóstico certero.')}
         </motion.p>
