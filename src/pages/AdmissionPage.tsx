@@ -29,9 +29,38 @@ export function AdmissionPage({ onBackToHome }: Props) {
     }));
   };
 
-  const nextStep = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, 5));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const nextStep = async () => {
+    if (currentStep === 4) {
+      // Step 4 is Plan selection, we go to Mercado Pago or direct success for Social
+      if (formData.plan.selectedPlan === 'social') {
+        setCurrentStep(5);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: `Plan ${formData.plan.selectedPlan === 'premium' ? 'Premium' : 'Urgente'} - Segunda Mirada`,
+            unit_price: formData.plan.amountToPay,
+            quantity: 1
+          })
+        });
+        const url = await response.json();
+        if (url.init_point) {
+          window.location.href = url.init_point; // redirect to MP
+        }
+      } catch (err) {
+        console.error("Payment initiation failed", err);
+        // Fallback or error state handling
+        alert("Hubo un error al iniciar el pago. Intenta nuevamente.");
+      }
+    } else {
+      setCurrentStep((prev) => Math.min(prev + 1, 5));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const prevStep = () => {
