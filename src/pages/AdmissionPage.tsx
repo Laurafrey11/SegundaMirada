@@ -7,6 +7,7 @@ import { StepMedical } from '../components/admission/StepMedical';
 import { StepFiles } from '../components/admission/StepFiles';
 import { StepPlan } from '../components/admission/StepPlan';
 import { StepSuccess } from '../components/admission/StepSuccess';
+import { supabase } from '../lib/supabase';
 
 interface Props {
   onBackToHome: () => void;
@@ -15,6 +16,7 @@ interface Props {
 export function AdmissionPage({ onBackToHome }: Props) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<AdmissionFormData>(initialFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateFormData = <K extends keyof AdmissionFormData>(
     section: K,
@@ -31,31 +33,87 @@ export function AdmissionPage({ onBackToHome }: Props) {
 
   const nextStep = async () => {
     if (currentStep === 4) {
-      // Step 4 is Plan selection, we go to Mercado Pago or direct success for Social
-      if (formData.plan.selectedPlan === 'social') {
-        setCurrentStep(5);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
+      if (isSubmitting) return;
+      setIsSubmitting(true);
 
       try {
-        const response = await fetch('/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: `Plan ${formData.plan.selectedPlan === 'premium' ? 'Premium' : 'Urgente'} - Segunda Mirada`,
-            unit_price: formData.plan.amountToPay,
-            quantity: 1
-          })
-        });
-        const url = await response.json();
-        if (url.init_point) {
-          window.location.href = url.init_point; // redirect to MP
+        // 1. Upload files to Supabase Storage
+        const filePaths: string[] = [];
+        for (const file of formData.files) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+          const filePath = `${formData.personal.documentId}/${fileName}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('medical_records')
+            .upload(filePath, file);
+
+          if (uploadError) {
+            console.error('Error uploading file:', uploadError);
+            throw new Error('Error al subir los archivos');
+          }
+          filePaths.push(filePath);
+        }
+
+        // 2. Insert record to DB
+        const [firstName, ...lastNames] = formData.personal.fullName.split(' ');
+        const lastName = lastNames.join(' ') || '-';
+
+        const { data: admissionData, error: insertError } = await supabase.from('admissions').insert([{
+          first_name: firstName,
+          last_name: lastName,
+          email: formData.personal.email,
+          phone: formData.personal.phone,
+          country: formData.personal.country,
+          id_number: formData.personal.documentId,
+          affected_area: formData.medical.affectedAreas.join(', '),
+          diagnosis: formData.medical.diagnosis,
+          treatments: formData.medical.proposedTreatment,
+          questions: formData.medical.doubts,
+          decisions: formData.medical.shortTermDecision,
+          expectations: formData.medical.expectations,
+          file_paths: filePaths,
+          plan: formData.plan.selectedPlan,
+          currency: formData.plan.currency,
+          amount_to_pay: formData.plan.amountToPay,
+          status: 'pending'
+        }]).select().single();
+
+        if (insertError) {
+          console.error('Error inserting admission:', insertError);
+          throw new Error('Error al guardar la admisión');
+        }
+
+        // 3. Handle Plan Routing
+        if (formData.plan.selectedPlan === 'social') {
+          setCurrentStep(5);
+        } else {
+          const response = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: `Plan ${formData.plan.selectedPlan === 'premium' ? 'Premium' : 'Urgente'} - Segunda Mirada`,
+              unit_price: formData.plan.amountToPay,
+              quantity: 1,
+              admission_id: admissionData?.id
+            })
+          });
+
+          if (!response.ok) throw new Error('Error en checkout API');
+
+          const url = await response.json();
+          if (url.init_point) {
+            window.location.href = url.init_point;
+          } else {
+            throw new Error('No init_point returned');
+          }
         }
       } catch (err) {
-        console.error("Payment initiation failed", err);
-        // Fallback or error state handling
-        alert("Hubo un error al iniciar el pago. Intenta nuevamente.");
+        console.error("Submission failed", err);
+        alert("Hubo un error al procesar la solicitud. Intenta nuevamente.");
+      } finally {
+        setIsSubmitting(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else {
       setCurrentStep((prev) => Math.min(prev + 1, 5));

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const client = new MercadoPagoConfig({ accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN });
 
     try {
-        const { title, unit_price, quantity = 1 } = req.body;
+        const { title, unit_price, quantity = 1, admission_id } = req.body;
 
         const preference = new Preference(client);
 
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
                     pending: `${req.headers.origin}/admission?status=pending`
                 },
                 auto_return: 'approved',
+                external_reference: admission_id,
             }
         });
 
