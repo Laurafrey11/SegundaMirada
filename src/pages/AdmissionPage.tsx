@@ -187,8 +187,13 @@ export function AdmissionPage({ onBackToHome }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 font-sans relative overflow-hidden">
+      {/* Medical Background Texture */}
+      <div className="absolute inset-0 opacity-15 pointer-events-none z-0">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center mix-blend-multiply grayscale" />
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         <button
           onClick={onBackToHome}
           className="text-slate-500 hover:text-slate-900 mb-8 font-medium transition-colors"

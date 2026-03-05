@@ -15,9 +15,9 @@ export function Hero({ onStartAdmission }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-black pt-24 pb-32 transition-colors duration-300">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/hospital/1920/1080?blur=4')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black mix-blend-multiply" />
+      <div className="absolute inset-0 opacity-60">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=2664&auto=format&fit=crop')] bg-cover bg-center grayscale contrast-125" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/50 to-black/90" />
       </div>
 
       <Vortex

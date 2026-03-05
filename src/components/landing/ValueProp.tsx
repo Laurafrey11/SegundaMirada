@@ -30,8 +30,13 @@ export function ValueProp() {
   return (
     <section className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-16 relative">
+          {/* Decorative Icon */}
+          <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none">
+            <Stethoscope className="w-32 h-32 text-blue-900" />
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4 relative z-10">
             {t('landing.why_choose_us.title')}
           </h2>
           <p className="text-lg text-slate-600">
