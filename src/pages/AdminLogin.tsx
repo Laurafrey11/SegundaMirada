@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function AdminLogin() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -21,7 +23,7 @@ export function AdminLogin() {
         });
 
         if (error) {
-            setError('Credenciales inválidas o cuenta no registrada.');
+            setError(t('admin.login_error', 'Invalid credentials or account not registered.'));
             setLoading(false);
         } else {
             navigate('/admin');
@@ -39,7 +41,7 @@ export function AdminLogin() {
 
                 <div className="bg-card shadow-xl rounded-2xl p-8 border border-border">
                     <h1 className="text-2xl font-bold text-center text-foreground mb-8">
-                        Acceso Administrador
+                        {t('admin.login_title', 'Admin Access')}
                     </h1>
 
                     {error && (
@@ -52,7 +54,7 @@ export function AdminLogin() {
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-2">
-                                Correo Electrónico
+                                {t('admin.email_label', 'Email Address')}
                             </label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -69,7 +71,7 @@ export function AdminLogin() {
 
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-2">
-                                Contraseña
+                                {t('admin.password_label', 'Password')}
                             </label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -92,7 +94,7 @@ export function AdminLogin() {
                             {loading ? (
                                 <div className="w-6 h-6 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"></div>
                             ) : (
-                                'Iniciar Sesión'
+                                t('admin.login_button', 'Sign In')
                             )}
                         </button>
                     </form>

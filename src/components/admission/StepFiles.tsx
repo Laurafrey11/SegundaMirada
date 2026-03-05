@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { UploadCloud, FileText, X, AlertCircle } from 'lucide-react';
 import { AdmissionFormData } from '../../types/admission';
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function StepFiles({ data, updateData, onNext, onBack }: Props) {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,14 +50,14 @@ export function StepFiles({ data, updateData, onNext, onBack }: Props) {
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-900">Estudios Médicos</h2>
-        <p className="text-slate-500 mt-2">Sube tus radiografías, resonancias, ecografías o informes médicos (PDF, JPG, PNG).</p>
+        <h2 className="text-2xl font-bold text-slate-900">{t('admission.files_title')}</h2>
+        <p className="text-slate-500 mt-2">{t('admission.files_subtitle')}</p>
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 text-amber-800 text-sm">
         <AlertCircle className="w-5 h-5 shrink-0 text-amber-600" />
         <p>
-          <strong>Importante:</strong> Asegúrate de que las imágenes sean claras y legibles. Una mala calidad de imagen puede dificultar el diagnóstico y requerir que subas nuevos estudios.
+          <strong>{t('admission.labels.important')}:</strong> {t('admission.placeholders.files_important')}
         </p>
       </div>
 
@@ -83,15 +85,15 @@ export function StepFiles({ data, updateData, onNext, onBack }: Props) {
             <UploadCloud className="w-8 h-8" />
           </div>
           <div>
-            <p className="text-lg font-medium text-slate-900">Arrastra tus archivos aquí</p>
-            <p className="text-sm text-slate-500 mt-1">o haz clic para seleccionar desde tu dispositivo</p>
+            <p className="text-lg font-medium text-slate-900">{t('admission.labels.drag_drop')}</p>
+            <p className="text-sm text-slate-500 mt-1">{t('admission.labels.click_select')}</p>
           </div>
         </div>
       </div>
 
       {data.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-medium text-slate-700">Archivos adjuntos ({data.length})</h3>
+          <h3 className="text-sm font-medium text-slate-700">{t('admission.labels.attached_files')} ({data.length})</h3>
           <ul className="space-y-2">
             {data.map((file, idx) => (
               <li key={idx} className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl shadow-sm">
@@ -118,7 +120,7 @@ export function StepFiles({ data, updateData, onNext, onBack }: Props) {
           onClick={onBack}
           className="text-slate-500 hover:text-slate-700 px-6 py-3 font-medium transition-colors"
         >
-          Volver
+          {t('common.back')}
         </button>
         <button
           type="button"
@@ -126,7 +128,7 @@ export function StepFiles({ data, updateData, onNext, onBack }: Props) {
           disabled={data.length === 0}
           className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-8 py-3 rounded-full font-medium transition-colors"
         >
-          Siguiente Paso
+          {t('admission.labels.next_step')}
         </button>
       </div>
     </div>

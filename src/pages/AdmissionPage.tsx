@@ -8,12 +8,14 @@ import { StepFiles } from '../components/admission/StepFiles';
 import { StepPlan } from '../components/admission/StepPlan';
 import { StepSuccess } from '../components/admission/StepSuccess';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onBackToHome: () => void;
 }
 
 export function AdmissionPage({ onBackToHome }: Props) {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<AdmissionFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +60,7 @@ export function AdmissionPage({ onBackToHome }: Props) {
 
           if (uploadError) {
             console.error('Error uploading file:', uploadError);
-            throw new Error('Error al subir los archivos');
+            throw new Error(t('admission.upload_error', 'Error uploading files'));
           }
           filePaths.push(filePath);
         }
@@ -89,7 +91,7 @@ export function AdmissionPage({ onBackToHome }: Props) {
 
         if (insertError) {
           console.error('Error inserting admission:', insertError);
-          throw new Error('Error al guardar la admisión');
+          throw new Error(t('admission.save_error', 'Error saving admission'));
         }
 
         // 3. Handle Plan Routing
@@ -118,7 +120,7 @@ export function AdmissionPage({ onBackToHome }: Props) {
         }
       } catch (err) {
         console.error("Submission failed", err);
-        alert("Hubo un error al procesar la solicitud. Intenta nuevamente.");
+        alert(t('admission.submission_error', "There was an error processing your request. Please try again."));
       } finally {
         setIsSubmitting(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -191,7 +193,7 @@ export function AdmissionPage({ onBackToHome }: Props) {
           onClick={onBackToHome}
           className="text-slate-500 hover:text-slate-900 mb-8 font-medium transition-colors"
         >
-          &larr; Volver al inicio
+          &larr; {t('admission.back_to_home', 'Back to home')}
         </button>
 
         {currentStep < 5 && (

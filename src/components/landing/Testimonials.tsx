@@ -1,48 +1,60 @@
 import { motion } from 'motion/react';
 import { Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const testimonials = [
   {
     id: 1,
     text: "Me salvaron de una cirugía innecesaria. El Dr. fue súper claro con mi diagnóstico de túnel carpiano.",
+    textEn: "They saved me from unnecessary surgery. The Dr. was super clear with my carpal tunnel diagnosis.",
     author: "María G.",
-    role: "Paciente"
+    role: "Paciente",
+    roleEn: "Patient"
   },
   {
     id: 2,
     text: "Excelente trato y claridad. Pude entender exactamente qué me pasaba en el hombro.",
+    textEn: "Excellent treatment and clarity. I could understand exactly what was happening to my shoulder.",
     author: "Carlos R.",
-    role: "Paciente"
+    role: "Paciente",
+    roleEn: "Patient"
   },
   {
     id: 3,
     text: "Fui a mi operación con total confianza después de que confirmaran el diagnóstico de mi médico tratante.",
+    textEn: "I went to my operation with total confidence after they confirmed my treating physician's diagnosis.",
     author: "Laura M.",
-    role: "Paciente"
+    role: "Paciente",
+    roleEn: "Patient"
   },
   {
     id: 4,
     text: "Rápido, profesional y sin tener que viajar a la capital. Una experiencia premium de verdad.",
+    textEn: "Fast, professional, and without having to travel to the capital. A truly premium experience.",
     author: "Diego S.",
-    role: "Paciente"
+    role: "Paciente",
+    roleEn: "Patient"
   },
   {
     id: 5,
     text: "La tranquilidad que te da hablar con un subespecialista no tiene precio. Altamente recomendado.",
+    textEn: "The peace of mind that talking to a subspecialist gives you is priceless. Highly recommended.",
     author: "Ana P.",
-    role: "Paciente"
+    role: "Paciente",
+    roleEn: "Patient"
   }
 ];
 
 export function Testimonials() {
+  const { t, i18n } = useTranslation();
   // Duplicate for infinite scroll effect
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
   return (
     <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Lo que dicen nuestros pacientes</h2>
-        <p className="mt-4 text-lg text-slate-600">Casos reales de personas que tomaron la mejor decisión.</p>
+        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">{t('landing.testimonials.title')}</h2>
+        <p className="mt-4 text-lg text-slate-600">{t('landing.testimonials.subtitle')}</p>
       </div>
 
       <div className="relative w-full flex overflow-hidden">
@@ -72,10 +84,14 @@ export function Testimonials() {
                   <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <p className="text-slate-700 mb-6 text-lg leading-relaxed">"{testimonial.text}"</p>
+              <p className="text-slate-700 mb-6 text-lg leading-relaxed">
+                "{i18n.language === 'en' ? testimonial.textEn : testimonial.text}"
+              </p>
               <div>
                 <p className="font-semibold text-slate-900">{testimonial.author}</p>
-                <p className="text-sm text-slate-500">{testimonial.role}</p>
+                <p className="text-sm text-slate-500">
+                  {i18n.language === 'en' ? testimonial.roleEn : testimonial.role}
+                </p>
               </div>
             </div>
           ))}

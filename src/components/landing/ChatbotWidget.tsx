@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getChatbotResponse } from '../../services/geminiService';
+import { useTranslation } from 'react-i18next';
 
 interface Message {
   text: string;
@@ -9,14 +10,20 @@ interface Message {
 }
 
 export function ChatbotWidget() {
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    { text: 'Hola 👋 Soy el asistente virtual de Segunda Mirada. ¿En qué te puedo ayudar con tu proceso de admisión?', isBot: true },
-    { text: 'Puedes preguntarme sobre los planes, cómo subir tus estudios o los tiempos de respuesta.', isBot: true }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Initialize messages when language changes or on mount
+  useEffect(() => {
+    setMessages([
+      { text: t('chatbot.welcome'), isBot: true },
+      { text: t('chatbot.help_prompt'), isBot: true }
+    ]);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -34,9 +41,9 @@ export function ChatbotWidget() {
 
     try {
       const response = await getChatbotResponse(userMessage);
-      setMessages(prev => [...prev, { text: response || 'No pude procesar tu solicitud.', isBot: true }]);
+      setMessages(prev => [...prev, { text: response || t('chatbot.error_response'), isBot: true }]);
     } catch (error) {
-      setMessages(prev => [...prev, { text: 'Hubo un error al conectar con el asistente.', isBot: true }]);
+      setMessages(prev => [...prev, { text: t('chatbot.connection_error'), isBot: true }]);
     } finally {
       setIsLoading(false);
     }
@@ -56,8 +63,8 @@ export function ChatbotWidget() {
           >
             <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
               <div>
-                <h3 className="font-semibold">Asistente Virtual</h3>
-                <p className="text-xs text-blue-200">En línea</p>
+                <h3 className="font-semibold">{t('chatbot.title')}</h3>
+                <p className="text-xs text-blue-200">{t('chatbot.status_online')}</p>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-blue-200 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
@@ -80,7 +87,7 @@ export function ChatbotWidget() {
               {isLoading && (
                 <div className="bg-white border border-slate-100 p-3 rounded-2xl rounded-tl-none text-sm text-slate-700 shadow-sm max-w-[85%] flex items-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
-                  <span>Escribiendo...</span>
+                  <span>{t('chatbot.typing')}</span>
                 </div>
               )}
             </div>
@@ -93,7 +100,7 @@ export function ChatbotWidget() {
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Escribe tu mensaje..." 
+                placeholder={t('chatbot.placeholder')} 
                 className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
               <button 

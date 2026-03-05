@@ -1,38 +1,41 @@
 import { Clock, CarFront, ShieldCheck, Stethoscope } from 'lucide-react';
-
-const benefits = [
-  {
-    icon: Clock,
-    title: "Atención Rápida",
-    description: "Sin meses de espera. Obtén tu segunda opinión en el tiempo que tu caso lo requiere."
-  },
-  {
-    icon: CarFront,
-    title: "Sin Traslados",
-    description: "Evita viajes largos, tráfico y gastos de estacionamiento. Consulta desde tu hogar."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Mejor que tu Obra Social",
-    description: "Atención personalizada, sin burocracia y con el tiempo que realmente mereces."
-  },
-  {
-    icon: Stethoscope,
-    title: "Especialistas de Alto Nivel",
-    description: "Evaluación por cirujanos subespecialistas en miembro superior y mano."
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export function ValueProp() {
+  const { t } = useTranslation();
+
+  const benefits = [
+    {
+      icon: Clock,
+      title: t('landing.why_choose_us.fast_care'),
+      description: t('landing.why_choose_us.fast_care_desc')
+    },
+    {
+      icon: CarFront,
+      title: t('landing.why_choose_us.no_travel'),
+      description: t('landing.why_choose_us.no_travel_desc')
+    },
+    {
+      icon: ShieldCheck,
+      title: t('landing.why_choose_us.better_than_insurance'),
+      description: t('landing.why_choose_us.better_than_insurance_desc')
+    },
+    {
+      icon: Stethoscope,
+      title: t('landing.why_choose_us.top_specialists'),
+      description: t('landing.why_choose_us.top_specialists_desc')
+    }
+  ];
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
-            ¿Por qué elegir Segunda Mirada?
+            {t('landing.why_choose_us.title')}
           </h2>
           <p className="text-lg text-slate-600">
-            Diseñamos un proceso pensado para darte respuestas claras cuando más las necesitas, eliminando las fricciones del sistema de salud tradicional.
+            {t('landing.why_choose_us.subtitle')}
           </p>
         </div>
 

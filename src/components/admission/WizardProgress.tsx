@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   currentStep: number;
@@ -6,11 +7,13 @@ interface Props {
 }
 
 export function WizardProgress({ currentStep, totalSteps }: Props) {
+  const { t } = useTranslation();
+  
   const steps = [
-    { id: 1, label: 'Datos Personales' },
-    { id: 2, label: 'Detalles Médicos' },
-    { id: 3, label: 'Estudios' },
-    { id: 4, label: 'Plan y Pago' },
+    { id: 1, label: t('admission.personal_title') },
+    { id: 2, label: t('admission.medical_title') },
+    { id: 3, label: t('admission.files_title') },
+    { id: 4, label: t('admission.plan_title') },
   ];
 
   return (

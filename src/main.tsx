@@ -12,14 +12,12 @@ import { ConfigGuard } from './components/layout/ConfigGuard.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <ConfigGuard>
-          <AuthProvider>
-            <SettingsToggle />
-            <App />
-          </AuthProvider>
-        </ConfigGuard>
-      </ThemeProvider>
+      <ConfigGuard>
+        <AuthProvider>
+          <SettingsToggle />
+          <App />
+        </AuthProvider>
+      </ConfigGuard>
     </BrowserRouter>
   </StrictMode>,
 );
