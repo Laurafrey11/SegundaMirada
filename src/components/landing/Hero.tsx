@@ -32,13 +32,15 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 mb-8 mt-12"
+          className="flex items-center gap-4 mb-8 mt-12"
         >
-          <div className="relative">
-            <div className="absolute inset-0 bg-cyan-400 blur-lg opacity-50 rounded-full"></div>
-            <ShieldCheck className="relative w-12 h-12 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+          <div className="relative animate-glow-pulse">
+            <ShieldCheck className="relative w-16 h-16 text-[#bd34fe] fill-[#bd34fe]/10" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#bd34fe] to-[#ffc429] opacity-20 blur-xl rounded-full -z-10"></div>
           </div>
-          <span className="text-3xl font-bold tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">Segunda Mirada</span>
+          <span className="text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-[0_0_15px_rgba(189,52,254,0.5)] bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+            Segunda Mirada
+          </span>
         </motion.div>
 
         <motion.h1

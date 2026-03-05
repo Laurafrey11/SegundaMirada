@@ -6,8 +6,10 @@ export function Navbar() {
   const { user } = useAuth();
   const location = useLocation();
 
-  // Only show if user is authenticated
-  if (!user) return null;
+  // Show if user is authenticated OR if env var is explicitly 'true'
+  const showAdminMenu = user || import.meta.env.VITE_SHOW_ADMIN_MENU === 'true';
+
+  if (!showAdminMenu) return null;
 
   const isActive = (path: string) => location.pathname === path;
 
