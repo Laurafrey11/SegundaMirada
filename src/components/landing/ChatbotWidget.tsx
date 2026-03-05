@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { getChatbotResponse } from '../../services/geminiService';
+import { getChatbotResponse } from '../../services/aiService';
 import { useTranslation } from 'react-i18next';
 
 interface Message {
