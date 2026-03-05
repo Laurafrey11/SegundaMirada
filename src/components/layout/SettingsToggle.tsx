@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Globe, Moon, Sun } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { useState } from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export function SettingsToggle() {
     const { i18n } = useTranslation();
