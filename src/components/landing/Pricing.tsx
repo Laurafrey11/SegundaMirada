@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -31,12 +32,22 @@ function TimeBar({ percentage }: { percentage: number }) {
 }
 
 export function Pricing({ onStartAdmission }: PricingProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch('https://dolarapi.com/v1/dolares/blue')
+      .then(res => res.json())
+      .then(data => setExchangeRate(data.venta))
+      .catch(console.error);
+  }, []);
 
   const plans = [
     {
+      id: 'social',
       name: t('landing.pricing.social.name'),
       price: t('landing.pricing.social.price'),
+      usdPrice: 500,
       description: t('landing.pricing.social.desc'),
       features: [
         t('landing.pricing.social.f1'),
@@ -51,8 +62,10 @@ export function Pricing({ onStartAdmission }: PricingProps) {
       popular: false
     },
     {
+      id: 'premium',
       name: t('landing.pricing.premium.name'),
       price: t('landing.pricing.premium.price'),
+      usdPrice: 500,
       description: t('landing.pricing.premium.desc'),
       features: [
         t('landing.pricing.premium.f1'),
@@ -67,8 +80,10 @@ export function Pricing({ onStartAdmission }: PricingProps) {
       popular: true
     },
     {
+      id: 'urgent',
       name: t('landing.pricing.urgent.name'),
       price: t('landing.pricing.urgent.price'),
+      usdPrice: 500,
       description: t('landing.pricing.urgent.desc'),
       features: [
         t('landing.pricing.urgent.f1'),
@@ -83,6 +98,8 @@ export function Pricing({ onStartAdmission }: PricingProps) {
       popular: false
     }
   ];
+
+  const isEnglish = i18n.language === 'en';
 
   return (
     <section className="py-24 bg-white">
@@ -108,7 +125,20 @@ export function Pricing({ onStartAdmission }: PricingProps) {
                 </div>
               )}
               <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-4 tracking-tight">{plan.price}</div>
+              
+              <div className="mb-4">
+                {isEnglish && exchangeRate ? (
+                  <div>
+                    <div className="text-3xl font-bold tracking-tight">${plan.usdPrice} USD</div>
+                    <div className={`text-sm mt-1 ${plan.popular ? 'text-blue-200' : 'text-slate-500'}`}>
+                      ≈ ${(plan.usdPrice * exchangeRate).toLocaleString('es-AR')} ARS
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-3xl font-bold tracking-tight">{plan.price}</div>
+                )}
+              </div>
+
               <p className={`text-sm mb-6 ${plan.popular ? 'text-blue-100' : 'text-slate-500'}`}>
                 {plan.description}
               </p>
