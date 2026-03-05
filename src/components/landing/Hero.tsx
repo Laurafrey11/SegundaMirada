@@ -13,7 +13,7 @@ export function Hero({ onStartAdmission }: HeroProps) {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden bg-black pt-24 pb-32 transition-colors duration-300">
+    <section className="relative overflow-hidden bg-black pb-32 transition-colors duration-300">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-60">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=2664&auto=format&fit=crop')] bg-cover bg-center grayscale contrast-125" />
@@ -32,12 +32,13 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-2 mb-8 mt-12"
+          className="flex items-center gap-3 mb-8 mt-12"
         >
-          <div className="bg-primary/20 p-2 rounded-full">
-            <ShieldCheck className="w-8 h-8 text-primary" />
+          <div className="relative">
+            <div className="absolute inset-0 bg-cyan-400 blur-lg opacity-50 rounded-full"></div>
+            <ShieldCheck className="relative w-12 h-12 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
           </div>
-          <span className="text-2xl font-semibold tracking-tight text-white">Segunda Mirada</span>
+          <span className="text-3xl font-bold tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">Segunda Mirada</span>
         </motion.div>
 
         <motion.h1
