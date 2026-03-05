@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { UploadCloud, FileText, X, AlertCircle } from 'lucide-react';
 import { AdmissionFormData } from '../../types/admission';
 
 interface Props {
-  data: AdmissionFormData['files'];
+  data: File[];
   updateData: (files: File[]) => void;
   onNext: () => void;
   onBack: () => void;
@@ -27,14 +27,14 @@ export function StepFiles({ data, updateData, onNext, onBack }: Props) {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const newFiles = Array.from(e.dataTransfer.files);
+      const newFiles = Array.from(e.dataTransfer.files) as File[];
       updateData([...data, ...newFiles]);
     }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files);
+      const newFiles = Array.from(e.target.files) as File[];
       updateData([...data, ...newFiles]);
     }
   };

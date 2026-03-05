@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AdmissionFormData, initialFormData } from '../types/admission';
 import { WizardProgress } from '../components/admission/WizardProgress';
@@ -17,6 +17,14 @@ export function AdmissionPage({ onBackToHome }: Props) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<AdmissionFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    if (status === 'success' || status === 'approved') {
+      setCurrentStep(5);
+    }
+  }, []);
 
   const updateFormData = <K extends keyof AdmissionFormData>(
     section: K,

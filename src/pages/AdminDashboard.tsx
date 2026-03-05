@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Search, Filter, FileText, CheckCircle, AlertTriangle, XCircle, ChevronRight, Download, Loader2 } from 'lucide-react';
+import { Search, Filter, FileText, CheckCircle, AlertTriangle, XCircle, ChevronRight, Download, Loader2, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Admission {
   id: string;
@@ -27,6 +28,7 @@ interface Admission {
 }
 
 export function AdminDashboard() {
+  const { signOut } = useAuth();
   const [admissions, setAdmissions] = useState<Admission[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPatient, setSelectedPatient] = useState<Admission | null>(null);
@@ -127,6 +129,13 @@ export function AdminDashboard() {
         </div>
         <div className="flex items-center gap-4">
           <div className="text-sm text-slate-600">Dr. Administrador</div>
+          <button
+            onClick={() => signOut()}
+            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            title="Cerrar Sesión"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
           <div className="w-8 h-8 rounded-full bg-slate-200 border border-slate-300" />
         </div>
       </header>
@@ -391,7 +400,7 @@ export function AdminDashboard() {
                   Cancelar
                 </button>
                 <button
-                  onClick={() => handleUpdateStatus(actionModal)}
+                  onClick={() => actionModal && handleUpdateStatus(actionModal)}
                   disabled={actionLoading}
                   className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors flex items-center justify-center min-w-[140px] disabled:opacity-50 ${actionModal === 'accepted' ? 'bg-emerald-600 hover:bg-emerald-700' :
                       actionModal === 'need_info' ? 'bg-amber-600 hover:bg-amber-700' :

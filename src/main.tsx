@@ -7,15 +7,18 @@ import './i18n/config';
 import { ThemeProvider } from './contexts/ThemeContext.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { SettingsToggle } from './components/layout/SettingsToggle.tsx';
+import { ConfigGuard } from './components/layout/ConfigGuard.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <AuthProvider>
-          <SettingsToggle />
-          <App />
-        </AuthProvider>
+        <ConfigGuard>
+          <AuthProvider>
+            <SettingsToggle />
+            <App />
+          </AuthProvider>
+        </ConfigGuard>
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,

@@ -19,8 +19,6 @@ export interface AdmissionFormData {
   files: File[];
   plan: {
     selectedPlan: 'social' | 'premium' | 'urgente' | null;
-    currency: 'ARS' | 'USD';
-    amountToPay: number;
     acceptTerms: boolean;
     acceptSocialTerms: boolean;
   };
@@ -47,8 +45,6 @@ export const initialFormData: AdmissionFormData = {
   files: [],
   plan: {
     selectedPlan: null,
-    currency: 'ARS',
-    amountToPay: 0,
     acceptTerms: false,
     acceptSocialTerms: false,
   },

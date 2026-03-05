@@ -11,7 +11,7 @@ interface Props {
 }
 
 const planPrices = {
-  social: { ars: 0, usdFix: null }, // social can be variable up to 100k, we keep logic separate if needed.
+  social: { ars: 0, usdFix: 500 },
   premium: { ars: 150000, usdFix: 500 },
   urgente: { ars: 250000, usdFix: 500 },
 };
@@ -24,7 +24,7 @@ export function StepPlan({ data, updateData, onNext, onBack }: Props) {
     {
       id: 'social' as const,
       name: t('admission.plan_social'),
-      price: "$0 a $100.000 ARS", // Keeping static for social plan 
+      price: data.currency === 'USD' ? "$500 USD" : "$0 a $100.000 ARS",
       time: "5 días hábiles",
       color: "border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800"
     },
@@ -55,7 +55,7 @@ export function StepPlan({ data, updateData, onNext, onBack }: Props) {
   }, []);
 
   useEffect(() => {
-    if (data.selectedPlan && data.selectedPlan !== 'social') {
+    if (data.selectedPlan) {
       let total = 0;
       if (data.currency === 'ARS') {
         total = planPrices[data.selectedPlan].ars;
@@ -64,8 +64,6 @@ export function StepPlan({ data, updateData, onNext, onBack }: Props) {
         total = (planPrices[data.selectedPlan].usdFix || 0) * exchangeRate;
       }
       updateData({ amountToPay: total });
-    } else {
-      updateData({ amountToPay: 0 }); // Social plan logic is separate/custom
     }
   }, [data.currency, data.selectedPlan, exchangeRate]);
 
@@ -125,7 +123,7 @@ export function StepPlan({ data, updateData, onNext, onBack }: Props) {
         ))}
       </div>
 
-      {data.selectedPlan && data.selectedPlan !== 'social' && data.amountToPay > 0 && (
+      {data.selectedPlan && data.amountToPay > 0 && (
         <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 rounded-xl p-4 flex justify-between items-center">
           <span className="text-blue-900 dark:text-blue-200 font-medium">{t('admission.total')}</span>
           <div className="text-right">

@@ -10,7 +10,7 @@ interface LandingPageProps {
 
 export function LandingPage({ onStartAdmission }: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <Hero onStartAdmission={onStartAdmission} />
       <Testimonials />
       <ValueProp />
