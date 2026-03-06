@@ -34,13 +34,13 @@ export function Hero({ onStartAdmission }: HeroProps) {
           transition={{ duration: 0.6 }}
           className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12 mt-12"
         >
-          <div className="relative">
-            {/* Subtle backlight for depth without altering logo colors */}
-            <div className="absolute -inset-4 bg-cyan-500/20 blur-2xl rounded-full opacity-50"></div>
+          <div className="relative flex justify-center items-center">
+            {/* Ambient brand glow integrated with the background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-cyan-400/20 blur-[60px] rounded-[100%] scale-[1.5] opacity-70"></div>
             <img 
               src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
               alt="Segunda Mirada Logo" 
-              className="relative w-auto h-48 md:h-64 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
+              className="relative w-auto h-56 md:h-80 object-contain drop-shadow-[0_0_20px_rgba(165,243,252,0.3)]"
               referrerPolicy="no-referrer"
             />
           </div>
