@@ -40,7 +40,7 @@ export function Hero({ onStartAdmission }: HeroProps) {
             <img 
               src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
               alt="Segunda Mirada Logo" 
-              className="relative w-auto h-32 md:h-40 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
+              className="relative w-auto h-48 md:h-64 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
               referrerPolicy="no-referrer"
             />
           </div>
