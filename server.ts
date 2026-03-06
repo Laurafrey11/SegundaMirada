@@ -1,9 +1,15 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
+import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+// Initialize Supabase client for the server
+const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function startServer() {
   const app = express();
@@ -40,6 +46,7 @@ async function startServer() {
           },
           auto_return: 'approved',
           external_reference: admission_id,
+          notification_url: `${process.env.APP_URL}/api/webhooks/mercadopago`,
         }
       });
 
@@ -48,6 +55,42 @@ async function startServer() {
       console.error('Error creating MercadoPago preference', error);
       res.status(500).json({ error: 'Error al crear la preferencia de pago' });
     }
+  });
+
+  // Webhook for MercadoPago
+  app.post("/api/webhooks/mercadopago", async (req, res) => {
+    const { type, data } = req.body;
+
+    if (type === 'payment') {
+      try {
+        const client = new MercadoPagoConfig({ 
+          accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN || '' 
+        });
+        const payment = new Payment(client);
+        const paymentInfo = await payment.get({ id: data.id });
+
+        if (paymentInfo.status === 'approved' && paymentInfo.external_reference) {
+          // Update the admission in Supabase
+          const { error } = await supabase
+            .from('admissions')
+            .update({ 
+              payment_id: paymentInfo.id?.toString(),
+              status: 'pending' // It's paid, now pending medical review
+            })
+            .eq('id', paymentInfo.external_reference);
+
+          if (error) {
+            console.error('Error updating admission payment status:', error);
+          } else {
+            console.log(`Payment ${paymentInfo.id} approved for admission ${paymentInfo.external_reference}`);
+          }
+        }
+      } catch (error) {
+        console.error('Error processing MercadoPago webhook:', error);
+      }
+    }
+
+    res.status(200).send('OK');
   });
 
   // Vite middleware for development
