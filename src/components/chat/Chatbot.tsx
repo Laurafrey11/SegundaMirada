@@ -3,8 +3,20 @@ import { MessageCircle, X, Send, Loader2, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GoogleGenAI } from '@google/genai';
 
-// Initialize Gemini API
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// Safely get the API key depending on the environment (Vite vs Node/AI Studio)
+const getApiKey = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+    return import.meta.env.VITE_GEMINI_API_KEY;
+  }
+  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
+    return process.env.GEMINI_API_KEY;
+  }
+  return '';
+};
+
+const apiKey = getApiKey();
+// Only initialize if we have a key to prevent crashes on load
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 interface Message {
   id: string;
@@ -29,6 +41,8 @@ export function Chatbot() {
   const chatSessionRef = useRef<any>(null);
 
   useEffect(() => {
+    if (!ai) return; // Don't initialize chat if AI is not configured
+
     // Initialize the chat session with system instructions
     chatSessionRef.current = ai.chats.create({
       model: "gemini-3-flash-preview",
@@ -67,9 +81,19 @@ export function Chatbot() {
     setInput('');
     setIsLoading(true);
 
-    try {
-      if (!chatSessionRef.current) throw new Error("Chat session not initialized");
+    if (!ai || !chatSessionRef.current) {
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          id: (Date.now() + 1).toString(), 
+          text: 'El asistente virtual no está configurado en este entorno (Falta la clave API).', 
+          sender: 'bot' 
+        }]);
+        setIsLoading(false);
+      }, 1000);
+      return;
+    }
 
+    try {
       // Send message to Gemini
       const response = await chatSessionRef.current.sendMessage({ message: userText });
       
