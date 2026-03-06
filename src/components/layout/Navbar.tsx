@@ -17,11 +17,7 @@ export function Navbar() {
            <img 
              src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
              alt="Segunda Mirada" 
-             className="h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] transition-transform duration-300 group-hover:scale-105"
-             style={{ 
-               maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 65%, transparent 100%)',
-               WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 65%, transparent 100%)'
-             }}
+             className="h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] transition-transform duration-300 group-hover:scale-105"
              referrerPolicy="no-referrer"
            />
         </Link>
