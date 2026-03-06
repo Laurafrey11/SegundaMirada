@@ -17,7 +17,7 @@ export function Navbar() {
            <img 
              src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
              alt="Segunda Mirada" 
-             className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]"
+             className="h-20 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
              referrerPolicy="no-referrer"
            />
         </Link>

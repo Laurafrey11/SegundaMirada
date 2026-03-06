@@ -35,12 +35,10 @@ export function Hero({ onStartAdmission }: HeroProps) {
           className="flex flex-col md:flex-row items-center justify-center gap-6 mb-2 mt-8"
         >
           <div className="relative flex justify-center items-center">
-            {/* White blurred glow to make the logo pop */}
-            <div className="absolute inset-0 bg-white/20 blur-[50px] rounded-full scale-[1.2] opacity-80"></div>
             <img 
               src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
               alt="Segunda Mirada Logo" 
-              className="relative w-auto h-56 md:h-80 object-contain drop-shadow-[0_0_25px_rgba(255,255,255,0.6)]"
+              className="relative w-auto h-56 md:h-80 object-contain transition-transform duration-500 hover:scale-105"
               referrerPolicy="no-referrer"
             />
           </div>
