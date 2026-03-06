@@ -13,11 +13,11 @@ export function Hero({ onStartAdmission }: HeroProps) {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden bg-black pb-32 transition-colors duration-300">
+    <section className="relative overflow-hidden bg-brand-dark pb-32 transition-colors duration-300">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-60">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=2664&auto=format&fit=crop')] bg-cover bg-center grayscale contrast-125" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/50 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/50 to-brand-dark/90" />
       </div>
 
       <Vortex
@@ -59,7 +59,7 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl font-light"
+          className="text-xl md:text-2xl text-brand-silver mb-12 max-w-2xl font-light"
         >
           {t('landing.subtitle', 'Segunda opinión médica premium por cirujanos especialistas en miembro superior y mano. Evita cirugías innecesarias con un diagnóstico certero.')}
         </motion.p>
@@ -103,13 +103,13 @@ export function Hero({ onStartAdmission }: HeroProps) {
             <div key={idx} className="flex flex-col items-center">
               <GlowCard
                 glowColor="blue"
-                className="w-full flex-col items-center text-center p-8 bg-card dark:bg-slate-900 border-border"
+                className="w-full flex-col items-center text-center p-8 bg-brand-petrol-dark border-brand-petrol-medium"
               >
-                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
-                  <feature.icon className="w-7 h-7" />
+                <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-400 mb-6 shadow-[0_0_20px_rgba(34,211,238,0.2)] border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all duration-300">
+                  <feature.icon className="w-7 h-7 drop-shadow-[0_0_5px_rgba(34,211,238,0.5)]" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-slate-300 leading-relaxed">{feature.desc}</p>
+                <p className="text-brand-silver leading-relaxed">{feature.desc}</p>
               </GlowCard>
             </div>
           ))}

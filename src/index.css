@@ -4,6 +4,13 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  --color-brand-dark: #0A1621;
+  --color-brand-petrol-dark: #112637;
+  --color-brand-petrol-medium: #1B384E;
+  --color-brand-petrol-light: #2B576F;
+  --color-brand-aqua: #698F98;
+  --color-brand-silver: #C1C6CB;
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));

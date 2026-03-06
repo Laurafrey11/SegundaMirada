@@ -11,7 +11,7 @@ export function Navbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-800 px-4 sm:px-6 py-3 sticky top-0 z-50">
+    <nav className="bg-brand-dark border-b border-brand-petrol-dark px-4 sm:px-6 py-3 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
            <img 

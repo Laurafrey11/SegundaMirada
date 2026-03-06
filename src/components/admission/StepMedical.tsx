@@ -66,7 +66,7 @@ export function StepMedical({ data, updateData, onNext, onBack }: Props) {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">1. {t('admission.labels.diagnosis')}</label>
+          <label className="text-sm font-medium text-slate-700">{t('admission.labels.diagnosis')}</label>
           <p className="text-xs text-slate-500 mb-2">{t('admission.placeholders.diagnosis_hint')}</p>
           <textarea
             required
@@ -79,7 +79,7 @@ export function StepMedical({ data, updateData, onNext, onBack }: Props) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">2. {t('admission.labels.treatment')}</label>
+          <label className="text-sm font-medium text-slate-700">{t('admission.labels.treatment')}</label>
           <p className="text-xs text-slate-500 mb-2">{t('admission.placeholders.treatment_hint')}</p>
           <textarea
             required
@@ -92,7 +92,7 @@ export function StepMedical({ data, updateData, onNext, onBack }: Props) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">3. {t('admission.labels.doubts')}</label>
+          <label className="text-sm font-medium text-slate-700">{t('admission.labels.doubts')}</label>
           <p className="text-xs text-slate-500 mb-2">{t('admission.placeholders.doubts_hint')}</p>
           <textarea
             required
@@ -105,7 +105,7 @@ export function StepMedical({ data, updateData, onNext, onBack }: Props) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">4. {t('admission.labels.decisions')}</label>
+          <label className="text-sm font-medium text-slate-700">{t('admission.labels.decisions')}</label>
           <p className="text-xs text-slate-500 mb-2">{t('admission.placeholders.decisions_hint')}</p>
           <textarea
             required
@@ -118,7 +118,7 @@ export function StepMedical({ data, updateData, onNext, onBack }: Props) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">5. {t('admission.labels.expectations')}</label>
+          <label className="text-sm font-medium text-slate-700">{t('admission.labels.expectations')}</label>
           <p className="text-xs text-slate-500 mb-2">{t('admission.placeholders.expectations_hint')}</p>
           <textarea
             required
