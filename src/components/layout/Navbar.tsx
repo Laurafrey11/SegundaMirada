@@ -15,9 +15,9 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
            <img 
-             src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.jpg" 
+             src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
              alt="Segunda Mirada" 
-             className="h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-transform duration-300 group-hover:scale-105"
+             className="h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] transition-transform duration-300 group-hover:scale-105"
              referrerPolicy="no-referrer"
            />
         </Link>

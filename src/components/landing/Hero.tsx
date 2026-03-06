@@ -38,13 +38,9 @@ export function Hero({ onStartAdmission }: HeroProps) {
             {/* Subtle backlight for depth without altering logo colors */}
             <div className="absolute -inset-4 bg-cyan-500/20 blur-2xl rounded-full opacity-50"></div>
             <img 
-              src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.jpg" 
+              src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-segunda-mirada.png" 
               alt="Segunda Mirada Logo" 
-              className="relative w-auto h-32 md:h-40 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] rounded-lg"
-              style={{ 
-                maskImage: 'radial-gradient(ellipse 95% 95% at 50% 50%, black 70%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 95% 95% at 50% 50%, black 70%, transparent 100%)'
-              }}
+              className="relative w-auto h-32 md:h-40 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
               referrerPolicy="no-referrer"
             />
           </div>
