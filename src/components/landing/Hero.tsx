@@ -32,15 +32,18 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-8 mt-12"
+          className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12 mt-12"
         >
-          <div className="relative animate-glow-pulse">
-            <ShieldCheck className="relative w-16 h-16 text-[#bd34fe] fill-[#bd34fe]/10" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#bd34fe] to-[#ffc429] opacity-20 blur-xl rounded-full -z-10"></div>
+          <div className="relative">
+            {/* Subtle backlight for depth without altering logo colors */}
+            <div className="absolute -inset-4 bg-cyan-500/20 blur-2xl rounded-full opacity-50"></div>
+            <img 
+              src="/logo-segunda-mirada.jpg" 
+              alt="Segunda Mirada Logo" 
+              className="relative w-auto h-32 md:h-40 object-contain drop-shadow-2xl rounded-lg"
+              referrerPolicy="no-referrer"
+            />
           </div>
-          <span className="text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-[0_0_15px_rgba(189,52,254,0.5)] bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
-            Segunda Mirada
-          </span>
         </motion.div>
 
         <motion.h1
