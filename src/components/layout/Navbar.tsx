@@ -5,6 +5,9 @@ export function Navbar() {
   const { user } = useAuth();
   const location = useLocation();
 
+  // Ocultar la barra de navegación si no hay usuario autenticado
+  if (!user) return null;
+
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -19,12 +22,6 @@ export function Navbar() {
            />
         </Link>
         <div className="flex gap-4 md:gap-6">
-          <Link
-            to="/"
-            className={`text-sm font-medium transition-colors ${isActive('/') ? 'text-cyan-400' : 'text-slate-400 hover:text-white'}`}
-          >
-            Landing
-          </Link>
           {user && (
             <>
               <Link
