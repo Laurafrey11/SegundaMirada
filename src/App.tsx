@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { AdmissionPage } from './pages/AdmissionPage';
 import { TermsPage } from './pages/TermsPage';
@@ -9,12 +9,14 @@ import { Navbar } from './components/layout/Navbar';
 import { Chatbot } from './components/chat/Chatbot';
 
 export default function App() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LandingPage onStartAdmission={() => { window.location.href = '/admission'; }} />} />
-        <Route path="/admission" element={<AdmissionPage onBackToHome={() => { window.location.href = '/'; }} />} />
+        <Route path="/" element={<LandingPage onStartAdmission={() => navigate('/admission')} />} />
+        <Route path="/admission" element={<AdmissionPage onBackToHome={() => navigate('/')} />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
