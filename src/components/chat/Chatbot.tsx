@@ -5,18 +5,29 @@ import { GoogleGenAI } from '@google/genai';
 
 // Safely get the API key depending on the environment (Vite vs Node/AI Studio)
 const getApiKey = () => {
-  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-    return import.meta.env.VITE_GEMINI_API_KEY;
-  }
-  if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
-    return process.env.GEMINI_API_KEY;
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
+      return import.meta.env.VITE_GEMINI_API_KEY;
+    }
+    if (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) {
+      return process.env.GEMINI_API_KEY;
+    }
+  } catch (e) {
+    console.warn("Error accessing environment variables", e);
   }
   return '';
 };
 
-const apiKey = getApiKey();
-// Only initialize if we have a key to prevent crashes on load
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+let ai: any = null;
+try {
+  const apiKey = getApiKey();
+  // Only initialize if we have a valid key to prevent crashes on load
+  if (apiKey && typeof apiKey === 'string' && apiKey.trim().length > 0 && apiKey !== 'undefined') {
+    ai = new GoogleGenAI({ apiKey: apiKey.trim() });
+  }
+} catch (e) {
+  console.warn("Failed to initialize Gemini API:", e);
+}
 
 interface Message {
   id: string;
