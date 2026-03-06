@@ -5,6 +5,9 @@ export function Navbar() {
   const { user } = useAuth();
   const location = useLocation();
 
+  // Privacidad de Admin: Ocultar menú si no hay sesión activa
+  if (!user) return null;
+
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -12,9 +15,9 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
            <img 
-             src="/logo-principal.jpg" 
+             src="https://ntjqzfvqwnwddxbeeipu.supabase.co/storage/v1/object/public/logos/logo-principal.jpg" 
              alt="GP Segunda Mirada" 
-             className="h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] transition-transform duration-300 group-hover:scale-105"
+             className="h-12 w-auto object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-transform duration-300 group-hover:scale-105"
              referrerPolicy="no-referrer"
            />
         </Link>
@@ -25,22 +28,18 @@ export function Navbar() {
           >
             Landing
           </Link>
-          {user && (
-            <>
-              <Link
-                to="/admission"
-                className={`text-sm font-medium transition-colors ${isActive('/admission') ? 'text-cyan-400' : 'text-slate-400 hover:text-white'}`}
-              >
-                Admisión
-              </Link>
-              <Link
-                to="/admin"
-                className={`text-sm font-medium transition-colors ${isActive('/admin') ? 'text-cyan-400' : 'text-slate-400 hover:text-white'}`}
-              >
-                Admin Panel
-              </Link>
-            </>
-          )}
+          <Link
+            to="/admission"
+            className={`text-sm font-medium transition-colors ${isActive('/admission') ? 'text-cyan-400' : 'text-slate-400 hover:text-white'}`}
+          >
+            Admisión
+          </Link>
+          <Link
+            to="/admin"
+            className={`text-sm font-medium transition-colors ${isActive('/admin') ? 'text-cyan-400' : 'text-slate-400 hover:text-white'}`}
+          >
+            Admin Panel
+          </Link>
         </div>
       </div>
     </nav>
