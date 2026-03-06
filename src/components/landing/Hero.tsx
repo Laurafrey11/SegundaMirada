@@ -32,7 +32,7 @@ export function Hero({ onStartAdmission }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12 mt-12"
+          className="flex flex-col md:flex-row items-center justify-center gap-6 mb-2 mt-8"
         >
           <div className="relative flex justify-center items-center">
             {/* Ambient brand glow integrated with the background */}
