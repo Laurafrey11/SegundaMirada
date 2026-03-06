@@ -6,6 +6,7 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminLogin } from './pages/AdminLogin';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { Navbar } from './components/layout/Navbar';
+import { Chatbot } from './components/chat/Chatbot';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           }
         />
       </Routes>
+      <Chatbot />
     </>
   );
 }
